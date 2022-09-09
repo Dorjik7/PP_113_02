@@ -137,7 +137,7 @@ public class UserDaoJDBCImpl implements UserDao {
             assert cleanTableStatement != null;
             try {
                 cleanTableStatement.closeOnCompletion();
-                System.out.println("Все данные удалены");
+                System.out.println("Все данные удалены.");
             } catch (SQLException e) {
                 e.printStackTrace();
             }

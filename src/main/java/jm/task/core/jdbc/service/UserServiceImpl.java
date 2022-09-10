@@ -18,8 +18,9 @@ public class UserServiceImpl implements UserService {
         dao.dropUsersTable();
     }
 
-    public void saveUser(String name, String lastName, byte age) {
+    public boolean saveUser(String name, String lastName, byte age) {
         dao.saveUser(name, lastName, age);
+        return false;
     }
 
     public void removeUserById(long id) {

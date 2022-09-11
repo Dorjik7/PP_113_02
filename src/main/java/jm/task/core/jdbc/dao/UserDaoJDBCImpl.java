@@ -1,14 +1,23 @@
 package jm.task.core.jdbc.dao;
 
+import jm.task.core.jdbc.Main;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
+
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.*;
+
+
+import static java.util.logging.Level.*;
+
 
 public class UserDaoJDBCImpl implements UserDao {
+    final static Logger LOGGER = Logger.getLogger(UserDaoJDBCImpl.class.getName());
+
     public UserDaoJDBCImpl() {
     }
 
@@ -19,14 +28,11 @@ public class UserDaoJDBCImpl implements UserDao {
                 "lastName VARCHAR(50)," +
                 "age INT)";
         try (Connection connection = Util.getConnection()) {
-           Statement tableCreateStatement = connection.createStatement();
+            Statement tableCreateStatement = connection.createStatement();
             tableCreateStatement.executeUpdate(sqlCommand);
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } finally {
-            //  assert tableCreateStatement != null;
-            //tableCreateStatement.closeOnCompletion();
             System.out.println("Создана новая таблица.");
+        } catch (SQLException | IOException e) {
+            LOGGER.log(SEVERE, e.toString(), e);
         }
     }
 
@@ -36,12 +42,10 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection()) {
             Statement dropTableStatement = connection.createStatement();
             dropTableStatement.executeUpdate(sqlCommand);
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } finally {
-            // assert dropTableStatement != null;
-            // dropTableStatement.closeOnCompletion();
             System.out.println("Таблица удалена.");
+        } catch (SQLException | IOException e) {
+            LOGGER.log(SEVERE, e.toString(), e);
+
         }
     }
 
@@ -53,13 +57,9 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } finally {
-            //  assert preparedStatement != null;
-
-            //        preparedStatement.closeOnCompletion();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
+        } catch (SQLException | IOException e) {
+            LOGGER.log(SEVERE, e.toString(), e);
         }
     }
 
@@ -68,12 +68,9 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection()) {
             Statement removeUserStatement = connection.createStatement();
             removeUserStatement.executeUpdate(sqlCommand);
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } finally {
-            //  assert removeUserStatement != null;
-            //       removeUserStatement.closeOnCompletion();
             System.out.println("User удален.");
+        } catch (SQLException | IOException e) {
+            LOGGER.log(SEVERE, e.toString(), e);
         }
     }
 
@@ -90,13 +87,11 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setLastName(results.getString("lastName"));
                 user.setAge(results.getByte("age"));
                 allUsers.add(user);
+                System.out.println("Данные о пользователях: " + allUsers);
             }
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } finally {
-            // assert allUsersStatement != null;
-            //      allUsersStatement.closeOnCompletion();
-            System.out.println("Данные о пользователях: " + allUsers);
+            LOGGER.log(SEVERE, e.toString(), e);
+
         }
         return allUsers;
     }
@@ -106,12 +101,9 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection()) {
             Statement cleanTableStatement = connection.createStatement();
             cleanTableStatement.executeUpdate(sqlCommand);
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } finally {
-            //   assert cleanTableStatement != null;
-            //      cleanTableStatement.closeOnCompletion();
             System.out.println("Все данные удалены.");
+        } catch (SQLException | IOException e) {
+            LOGGER.log(SEVERE, e.toString(), e);
         }
     }
 }

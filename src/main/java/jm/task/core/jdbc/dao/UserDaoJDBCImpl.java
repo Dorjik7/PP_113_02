@@ -32,7 +32,7 @@ public class UserDaoJDBCImpl implements UserDao {
             tableCreateStatement.executeUpdate(sqlCommand);
             System.out.println("Создана новая таблица.");
         } catch (SQLException | IOException e) {
-            LOGGER.log(SEVERE, e.toString(), e);
+            LOGGER.log(WARNING, e.toString(), e);
         }
     }
 
@@ -44,7 +44,7 @@ public class UserDaoJDBCImpl implements UserDao {
             dropTableStatement.executeUpdate(sqlCommand);
             System.out.println("Таблица удалена.");
         } catch (SQLException | IOException e) {
-            LOGGER.log(SEVERE, e.toString(), e);
+            LOGGER.log(WARNING, e.toString(), e);
 
         }
     }
@@ -59,7 +59,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
         } catch (SQLException | IOException e) {
-            LOGGER.log(SEVERE, e.toString(), e);
+            LOGGER.log(WARNING, e.toString(), e);
         }
     }
 
@@ -70,7 +70,7 @@ public class UserDaoJDBCImpl implements UserDao {
             removeUserStatement.executeUpdate(sqlCommand);
             System.out.println("User удален.");
         } catch (SQLException | IOException e) {
-            LOGGER.log(SEVERE, e.toString(), e);
+            LOGGER.log(WARNING, e.toString(), e);
         }
     }
 
@@ -90,7 +90,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 System.out.println("Данные о пользователях: " + allUsers);
             }
         } catch (SQLException | IOException e) {
-            LOGGER.log(SEVERE, e.toString(), e);
+            LOGGER.log(WARNING, e.toString(), e);
 
         }
         return allUsers;
@@ -103,7 +103,7 @@ public class UserDaoJDBCImpl implements UserDao {
             cleanTableStatement.executeUpdate(sqlCommand);
             System.out.println("Все данные удалены.");
         } catch (SQLException | IOException e) {
-            LOGGER.log(SEVERE, e.toString(), e);
+            LOGGER.log(WARNING, e.toString(), e);
         }
     }
 }
